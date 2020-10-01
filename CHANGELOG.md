@@ -1,5 +1,10 @@
 # Changelog
 
+## Unreleased
+
+### Fixed 
+-Fixed [#750](https://github.com/craftcms/feed-me/issues/750)
+
 ## 4.2.3 - 2020-05-12
 
 ### Fixed
