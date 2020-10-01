@@ -318,6 +318,7 @@ class AssetHelper
      *
      * @param string $filename
      * @return string
+     * @since 4.2.4
      */
     public static function cleanUpFileName(string $filename) {
         $filename = str_replace('%20', '_', $filename);
