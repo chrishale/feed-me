@@ -2,13 +2,16 @@
 
 ## Unreleased
 
-### Fixed 
--Fixed [#750](https://github.com/craftcms/feed-me/issues/750)
+## 4.2.4 - 2020-10-01
+
+### Fixed
+- Fixed a bug where pagination would break if a feed provided a root relative pagination URL.
+- Fixed a bug where pagination would break if a feed provided an invalid URL.  ([#694](https://github.com/craftcms/feed-me/issues/694))
 
 ## 4.2.3 - 2020-05-12
 
 ### Fixed
-- Fixed a bug where all elements would be disabled if the “Add” and “Disable” strategies were used together. ([#696](https://github.com/craftcms/feed-me/issues/696)
+- Fixed a bug where all elements would be disabled if the “Add” and “Disable” strategies were used together. ([#696](https://github.com/craftcms/feed-me/issues/696))
 
 ## 4.2.2 - 2020-03-26
 
