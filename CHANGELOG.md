@@ -2,6 +2,9 @@
 
 ## Unreleased
 
+### Fixed 
+-Fixed [#750](https://github.com/craftcms/feed-me/issues/750)
+
 ## 4.2.4 - 2020-10-01
 
 ### Fixed
