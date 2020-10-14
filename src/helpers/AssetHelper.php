@@ -2,8 +2,9 @@
 
 namespace craft\feedme\helpers;
 
-use Cake\Utility\Hash;
 use Craft;
+
+use Cake\Utility\Hash;
 use craft\elements\Asset as AssetElement;
 use craft\feedme\Plugin;
 use craft\helpers\Assets as AssetsHelper;
@@ -11,12 +12,24 @@ use craft\helpers\FileHelper;
 use craft\helpers\UrlHelper;
 use Mimey\MimeTypes;
 
+/**
+ * Asset helper.
+ *
+ * @author Pixel & Tonic, Inc. <support@pixelandtonic.com>
+ * @since 4.0.0
+ */
 class AssetHelper
 {
-    // Public Methods
-    // =========================================================================
-
-    public static function downloadFile($srcName, $dstName, $chunkSize = 1, $returnbytes = true)
+    /**
+     * Downloads a file.
+     *
+     * @param string $srcName
+     * @param string $dstName
+     * @param int $chunkSize
+     * @param bool $returnbytes
+     * @return mixed
+     */
+    public static function downloadFile(string $srcName, string $dstName, int $chunkSize = 1, bool $returnbytes = true)
     {
         $assetDownloadCurl = Plugin::$plugin->getSettings()->assetDownloadCurl;
 
@@ -63,7 +76,14 @@ class AssetHelper
         }
     }
 
-    public static function fetchRemoteImage($urls, $fieldInfo, $feed, $field = null, $element = null, $folderId = null, $newFilename = null)
+    /**
+     * Fetches a remote image.
+     *
+     * @param array $urls
+     * @param string $fieldInfo
+     * @return array
+     */
+    public static function fetchRemoteImage(array $urls, string $fieldInfo, $feed, $field = null, $element = null, $folderId = null, $newFilename = null)
     {
         $uploadedAssets = [];
 
@@ -75,7 +95,7 @@ class AssetHelper
         // user has set to use that instead so we're good to proceed.
         foreach ($urls as $url) {
             try {
-                $filename = self::cleanUpFileName($newFilename) ?? self::getRemoteUrlFilename($url);
+                $filename = $newFilename ? self::cleanUpFileName($newFilename) : self::getRemoteUrlFilename($url);
 
                 $fetchedImage = $tempFeedMePath . $filename;
 
@@ -112,6 +132,9 @@ class AssetHelper
         return $uploadedAssets;
     }
 
+    /**
+     * Creates a Base 64 image.
+     */
     public static function createBase64Image($base64, $fieldInfo, $feed, $field = null, $element = null, $folderId = null)
     {
         $uploadedAssets = [];
@@ -158,16 +181,17 @@ class AssetHelper
     }
 
     /**
+     * Creates an Asset.
+     *
      * @param string $tempFilePath
      * @param string $filename
      * @param int $folderId
      * @param string $field
      * @param string $element
      * @param string $conflict
-     *
-     * @return int
+     * @return mixed
      */
-    private static function createAsset($tempFilePath, $filename, $folderId, $feed, $field, $element, $conflict)
+    private static function createAsset(string $tempFilePath, string $filename, int $folderId, $feed, string $field, string $element, string $conflict)
     {
         $assets = Craft::$app->getAssets();
 
@@ -222,6 +246,8 @@ class AssetHelper
     }
 
     /**
+     * Creates a Feed Me's temp path
+     *
      * @return string
      */
     private static function createTempFeedMePath()
@@ -235,7 +261,13 @@ class AssetHelper
         return $tempFeedMePath;
     }
 
-    public static function getRemoteUrlFilename($url)
+    /**
+     * Gets a remote URL's Filename
+     *
+     * @param string $url
+     * @return string
+     */
+    public static function getRemoteUrlFilename(string $url)
     {
         // Function to extract a filename from a URL path. It does not query the actual URL however.
         // There are some tricky cases being tested again, and mostly revolves around query strings. We do our best to figure it out!
@@ -267,7 +299,13 @@ class AssetHelper
         return $filename . '.' . $extension;
     }
 
-    public static function getRemoteUrlExtension($url)
+    /**
+     * Gets a remote URL's Extension
+     *
+     * @param string $url
+     * @return string
+     */
+    public static function getRemoteUrlExtension(string $url)
     {
         $mimes = new MimeTypes;
 
@@ -318,7 +356,7 @@ class AssetHelper
      *
      * @param string $filename
      * @return string
-     * @since 4.2.4
+     * @since 4.2.5
      */
     public static function cleanUpFileName(string $filename) {
         $filename = str_replace('%20', '_', $filename);
@@ -332,7 +370,7 @@ class AssetHelper
      * @return string
      * @deprecated since
      */
-    public static function queryHash($string)
+    public static function queryHash(string $string)
     {
         return $string;
     }
