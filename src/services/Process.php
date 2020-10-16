@@ -349,6 +349,38 @@ class Process extends Component
             if (Hash::get($fieldInfo, 'field')) {
                 $fieldValue = Plugin::$plugin->fields->parseField($feed, $element, $feedData, $fieldHandle, $fieldInfo);
 
+                if ($fieldHandle === 'variants') {
+                  $newVariant = $fieldValue['new1'];
+                  $existingVariants = $element->variants->all();
+
+                  $fieldValue = [];
+
+                  $new = true;
+                  foreach ( $existingVariants as $key => $variant ) {
+                    if ($newVariant['fields']['sku'] === $variant->sku) {
+                      $new = false;
+                      $fieldValue['new' . ($key + 1)] = array_merge($newVariant, ['order' => $key + 1]);
+                    } else {
+                      $fieldValue['new' . ($key + 1)] = [
+                        'type' => $variant->typeId,
+                        'order' => $key + 1,
+                        'enabled' => 1,
+                        'fields' => [
+                          'sku' => $variant->sku,
+                          'productPrice' => $variant->productPrice,
+                          'purchasable' => $variant->purchasable->value,
+                          'options' => array_map(function($option) { return $option->id; }, $variant->options->all()),
+                        ]
+                      ];
+                    }
+                  }
+
+
+                  if ($new) {
+                    $fieldValue["new".(count($fieldValue) + 1)] = $newVariant;
+                  }
+                }
+
                 if ($fieldValue !== null) {
                     $fieldData[$fieldHandle] = $fieldValue;
                 }
