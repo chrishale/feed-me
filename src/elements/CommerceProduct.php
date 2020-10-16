@@ -200,6 +200,10 @@ class CommerceProduct extends Element
 
     private function _parseVariants($event)
     {
+        if (!Commerce::getInstance()) {
+          return;
+        }
+
         $feed = $event->feed;
         $feedData = $event->feedData;
         $contentData = $event->contentData;
